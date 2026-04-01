@@ -1,5 +1,7 @@
 # Sunil Kumar Portfolio
 
+🌟 **[Live Portfolio: Visit My Interactive Portfolio Here!](https://resume-portfolio--sunikumar300.replit.app/#projects)**
+
 A full-stack, dynamically driven portfolio application built with modern web technologies. This project is structured as a monorepo that contains the React frontend, Node.js backend API, and shared libraries for database schemas, API specifications, and generated clients.
 
 ## 🚀 Technology Stack
