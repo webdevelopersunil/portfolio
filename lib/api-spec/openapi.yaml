@@ -1,0 +1,516 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: Portfolio API with content management
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: auth
+    description: Authentication
+  - name: content
+    description: Portfolio content management
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /auth/login:
+    post:
+      operationId: login
+      tags: [auth]
+      summary: Admin login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/logout:
+    post:
+      operationId: logout
+      tags: [auth]
+      summary: Logout
+      responses:
+        "200":
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+
+  /auth/me:
+    get:
+      operationId: getMe
+      tags: [auth]
+      summary: Get auth status
+      responses:
+        "200":
+          description: Auth status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthStatus"
+
+  /content:
+    get:
+      operationId: getPortfolioContent
+      tags: [content]
+      summary: Get all portfolio content
+      responses:
+        "200":
+          description: All portfolio content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortfolioContent"
+
+  /content/hero:
+    put:
+      operationId: updateHeroContent
+      tags: [content]
+      summary: Update hero section
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HeroContent"
+      responses:
+        "200":
+          description: Updated hero content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HeroContent"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /content/experience:
+    put:
+      operationId: updateExperienceContent
+      tags: [content]
+      summary: Update experience section
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExperienceContent"
+      responses:
+        "200":
+          description: Updated experience content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExperienceContent"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /content/projects:
+    put:
+      operationId: updateProjectsContent
+      tags: [content]
+      summary: Update projects section
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectsContent"
+      responses:
+        "200":
+          description: Updated projects content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectsContent"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /content/skills:
+    put:
+      operationId: updateSkillsContent
+      tags: [content]
+      summary: Update skills section
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SkillsContent"
+      responses:
+        "200":
+          description: Updated skills content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SkillsContent"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /content/education:
+    put:
+      operationId: updateEducationContent
+      tags: [content]
+      summary: Update education section
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EducationContent"
+      responses:
+        "200":
+          description: Updated education content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EducationContent"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /content/achievements:
+    put:
+      operationId: updateAchievementsContent
+      tags: [content]
+      summary: Update achievements section
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AchievementsContent"
+      responses:
+        "200":
+          description: Updated achievements content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AchievementsContent"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        message:
+          type: string
+      required:
+        - token
+        - message
+
+    AuthStatus:
+      type: object
+      properties:
+        authenticated:
+          type: boolean
+        username:
+          type: ["string", "null"]
+      required:
+        - authenticated
+        - username
+
+    HeroContent:
+      type: object
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        tagline:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        linkedin:
+          type: string
+        github:
+          type: string
+        availableForWork:
+          type: boolean
+      required:
+        - name
+        - title
+        - tagline
+        - email
+        - phone
+        - linkedin
+        - github
+        - availableForWork
+
+    ExperienceItem:
+      type: object
+      properties:
+        id:
+          type: string
+        company:
+          type: string
+        payroll:
+          type: ["string", "null"]
+        role:
+          type: string
+        startDate:
+          type: string
+        endDate:
+          type: ["string", "null"]
+        location:
+          type: string
+        bullets:
+          type: array
+          items:
+            type: string
+      required:
+        - id
+        - company
+        - payroll
+        - role
+        - startDate
+        - endDate
+        - location
+        - bullets
+
+    ExperienceContent:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExperienceItem"
+      required:
+        - items
+
+    ProjectItem:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        techStack:
+          type: string
+        description:
+          type: string
+        bullets:
+          type: array
+          items:
+            type: string
+        githubUrl:
+          type: ["string", "null"]
+        period:
+          type: ["string", "null"]
+      required:
+        - id
+        - title
+        - techStack
+        - description
+        - bullets
+        - githubUrl
+        - period
+
+    ProjectsContent:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProjectItem"
+      required:
+        - items
+
+    SkillCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+      required:
+        - id
+        - title
+        - skills
+
+    SkillsContent:
+      type: object
+      properties:
+        categories:
+          type: array
+          items:
+            $ref: "#/components/schemas/SkillCategory"
+      required:
+        - categories
+
+    EducationItem:
+      type: object
+      properties:
+        id:
+          type: string
+        institution:
+          type: string
+        degree:
+          type: string
+        period:
+          type: string
+        location:
+          type: string
+        percentage:
+          type: ["string", "null"]
+      required:
+        - id
+        - institution
+        - degree
+        - period
+        - location
+        - percentage
+
+    EducationContent:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/EducationItem"
+      required:
+        - items
+
+    AchievementItem:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+      required:
+        - id
+        - title
+        - description
+
+    AchievementsContent:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/AchievementItem"
+      required:
+        - items
+
+    PortfolioContent:
+      type: object
+      properties:
+        hero:
+          $ref: "#/components/schemas/HeroContent"
+        experience:
+          $ref: "#/components/schemas/ExperienceContent"
+        projects:
+          $ref: "#/components/schemas/ProjectsContent"
+        skills:
+          $ref: "#/components/schemas/SkillsContent"
+        education:
+          $ref: "#/components/schemas/EducationContent"
+        achievements:
+          $ref: "#/components/schemas/AchievementsContent"
+      required:
+        - hero
+        - experience
+        - projects
+        - skills
+        - education
+        - achievements
